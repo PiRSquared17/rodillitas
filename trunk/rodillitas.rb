@@ -11,6 +11,7 @@ Config = YAML::load(File.open("config.yml"))
 Constants = YAML::load(File.open("const.yml"))
 
 class Rodillitas < IRC
+    #Gestionamos los comandos y sus argumentos
     def on_command(command, args, who, where)
         case command
         when /^all$/: show_help(where)
