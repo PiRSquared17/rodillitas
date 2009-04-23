@@ -47,7 +47,18 @@ class Rodillitas < IRC
                     write_to_chan("#{lang}:#{proj}:#{who} ha hecho #{editcount} ediciones", where)
                 end
             end
-
+        when /^calc$/
+            args.untaint
+            if args =~ /pi/
+                write_to_chan("¿para qué narices necesitas PI en wikipedia? Wikifica un poco, anda", where)
+            else
+                calculated = eval(args).to_s
+                if calculated.length > 20
+                    write_to_chan("ACTION mira el resultado y se pregunta qué tendrá que ver con Wikipedia", where)
+                else
+                    write_to_chan(eval(args).to_s ,where)
+                end
+            end
         when /^cb$/
             write_to_chan("http://es.wikipedia.org/wiki/Special:contributions/#{args}", where)
             write_to_chan("http://es.wikipedia.org/wiki/Special:blockip/#{args}", where)
@@ -68,8 +79,6 @@ class Rodillitas < IRC
                 when Net::HTTPRedirection 
                     response = http.get(response['location'])
                 end
-                puts "/w/index.php?title=#{what}&action=raw"
-                puts response.body
                 write_to_chan(response.body[0..200].gsub("\n", " "), where)
             end
             
@@ -113,6 +122,19 @@ class Rodillitas < IRC
 
         when /^sugus$/
             write_to_chan("pasa por ventanilla: http://code.google.com/p/rodillitas/issues/entry", where)
+        when /^tam$/
+            lang, proj, what = get_lang_site(args)
+            url = URI.parse("http://#{lang}.#{proj}.org")
+            url.host.untaint
+            Net::HTTP.start(url.host, url.port) do |http|
+                response =  http.get("/w/index.php?title=#{what.gsub(" ","_")}&action=raw")
+                case response
+                when Net::HTTPSuccess     then response
+                when Net::HTTPRedirection 
+                    response = http.get(response['location'])
+                end
+                write_to_chan(response.body.length.to_s + " bytes", where)
+            end
 
         when /^vec$/
             write_to_chan("http://es.wikipedia.org/wiki/WP:VEC", where)
@@ -125,7 +147,7 @@ class Rodillitas < IRC
     end
 
     def show_help(where)
-        write_to_chan("@art, @cb, @cdb, @dest, @fetch, @info, @mant, @site, @sugus, @vec" , where)
+        write_to_chan("&art, &cb, &cdb, &dest, &fetch, &info, &mant, &site, &sugus, &vec" , where)
     end
 
     def on_pub_msg(what, who, where)

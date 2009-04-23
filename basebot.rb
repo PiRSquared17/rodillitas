@@ -75,7 +75,7 @@ class IRC
     end
 
     def on_msg(what, who, where)
-        #mirar si es un comando (que empieza por @)
+        #mirar si es un comando (que empieza por &)
         if what =~ /^&(\S+)\s?(.*)$/
             on_command($1, $2, who, where)
         else 
