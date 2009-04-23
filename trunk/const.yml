@@ -36,9 +36,6 @@ multilingual_project:
   commons : commons
   wikispecies : species
   incubator : incubator
-  wmania : mania
-  wikimedia : foundation
-  foundation : foundation
 
 #consultar http://en.wikipedia.org/w/api.php?action=sitematrix
 
