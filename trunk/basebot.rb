@@ -1,12 +1,12 @@
 #!/usr/local/bin/ruby
 
 require "socket"
-#Based on http://snippets.dzone.com/posts/show/1785
+#Basado en http://snippets.dzone.com/posts/show/1785
 
 # Don't allow use of "tainted" data by potentially dangerous operations
 $SAFE=1
 
-# The irc class, which talks to the server and holds the main event loop
+# La clase IRC se comunica con el servidor y alberga el bucle principal
 class IRC
     def initialize(server, port, nick, channel, user)
         @server = server
@@ -15,12 +15,12 @@ class IRC
         @channel = channel
     end
     def send(s)
-        # Send a message to the irc server and print it to the screen
+        # Envía un mensaje al servidor de IRC y lo muestra en pantalla
         puts "--> #{s}"
         @irc.send "#{s}\n", 0 
     end
     def connect()
-        # Connect to the IRC server
+        # Conectarse al servidor
         @irc = TCPSocket.open(@server, @port)
         send "USER rodillitas rodillitas rodillitas: rodillitas rodillitas"
         send "NICK #{@nick}"
@@ -40,8 +40,7 @@ class IRC
         return "Error"
     end
     def handle_server_input(s)
-        # This isn't at all efficient, but it shows what we can do with Ruby
-        # (Dave Thomas calls this construct "a multiway if on steroids")
+        #la batería de regexps de cosas que nos manda el server
         case s.strip
             when /^PING :(.+)$/i
                 puts "[ Server ping ]"
@@ -66,14 +65,19 @@ class IRC
         end
     end
 
+    #FUNCIONES A SOBRECARGAR CUANDO SE HEREDE
     def write_to_chan(what, where)
         send "PRIVMSG ##{where} :#{what}"
     end
 
+    def action_to_chan(what, where)
+        send "PRIVMSG ##{where} :ACTION #{what}"
+    end
+
     def on_msg(what, who, where)
-        #Check if there is a command
-        if what =~ /^@(.+)$/
-            on_command($1, who, where)
+        #mirar si es un comando (que empieza por @)
+        if what =~ /^@(\S+)\s?(.*)$/
+            on_command($1, $2, who, where)
         else 
             on_pub_msg(what, who, where)
         end
@@ -83,7 +87,7 @@ class IRC
         puts "#{who} says #{what} at #{where}"
     end
 
-    def on_command(command, who, where)
+    def on_command(command, args, who, where)
         puts "Command #{command}"
     end
     

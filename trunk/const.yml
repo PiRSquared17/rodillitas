@@ -1,0 +1,285 @@
+month:
+  - el mes que no existe
+  - enero
+  - febrero
+  - marzo
+  - abril
+  - mayo
+  - junio
+  - julio
+  - agosto
+  - septiembre
+  - octubre
+  - noviembre
+  - diciembre
+
+project:
+  w : wikipedia
+  wikipedia : wikipedia
+  b : wikibooks
+  wikibooks : wikibooks
+  q : wikiquote
+  wikiquote : wikiquote
+  n : wikinews
+  wikinews : wikinews
+  s : wikisource
+  wikisource : wikisource
+  v : wikiversity
+  wikiversity : wikiversity
+  wikt : wiktionary
+  wiktionary : wiktionary
+
+multilingual_project:
+  m : meta
+  meta : meta
+  metawikipedia : meta
+  commons : commons
+  wikispecies : species
+  incubator : incubator
+  wmania : mania
+  wikimedia : foundation
+  foundation : foundation
+
+#consultar http://en.wikipedia.org/w/api.php?action=sitematrix
+
+site:
+  aa: afar
+  ab: abjaso (Аҧсуа)
+  af: afrikaans
+  ak: akana
+  als: alemánico (Alemannisch)
+  am: amárico (አማርኛ)
+  an: aragonés
+  ang: anglosajón
+  ar: árabe (العربية)
+  arc: ܕܥܒܪܸܝܛ
+  as: অসমীয়া
+  ast: asturiano (asturianu)
+  av: avar Авар
+  ay: aimara (Aymar)
+  az: azerí (azərbaycan)
+  ba: baskir Башҡорт #baixkir
+  bat-smg: Žemaitėška
+  be: bieloruso (Беларуская)
+  bg: búlgaro (Български)
+  bh: bihari (भोजपुरी)
+  bi: bislama
+  bm: bamanankan
+  bn: bengalí (বাংলা)
+  bo: tibetano (བོད་ཡིག)
+  br: breton (brezhoneg)
+  bs: bosnio
+  bug: bugui (ᨅᨔ ᨕᨘᨁᨗ)
+  ca: catalán (català)
+  ce: checheno (Нохчийн)
+  ceb: cebuano
+  ch: chamorro (chamoru)
+  cho: choctaw
+  chr: cherokee (ᏣᎳᎩ)
+  chy: cheyenne (tsetsêhestâhese)
+  closed-zh-tw: 
+  co: corso (corsu)
+  cr: cree (Nēhiyaw / ᓀᐦᐃᔭᐤ)
+  cs: checo (Česky)
+  csb: casubio (Kaszëbsczi)
+  cv: chuvasio (Чӑваш)
+  cy: galés (cymraeg)
+  da: danés (dansk)
+  de: alemán (Deutsch)
+  dv: divehi (ދިވެހިބަސް)
+  dz: dzongkha (ཇོང་ཁ)
+  ee: ewe (Ɛʋɛ)
+  el: griego (Ελληνικά)
+  en: inglés (English)
+  eo: esperanto
+  es: castellano
+  et: estonio (eesti)
+  ext: extremeño (luenga estremeña)
+  eu: vasco (euskara)
+  fa: persa (فارسی)
+  ff: fulde (Fulfulde)
+  fi: finés (suomi)
+  fiu-vro: Võro
+  fj: Na Vosa Vakaviti
+  fo: feroés (føroyskt)
+  fr: francés (français)
+  frp: francoprovenzal (arpitan)
+  fur: friulés (furlan)
+  fy: friso (Frysk)
+  ga: gaélico irlandés (gaeilge)
+  gd: gaélico escocés (gàidhlig)
+  gl: gallego (galego)
+  gn: guaraní (avañe'ẽ)
+  got: gótico (𐌲𐌿𐍄𐌹𐍃𐌺)
+  gu: guyuratí (ગુજરાતી)
+  gv: gaélico manx (gaelg)
+  ha: hausa (هَوُسَ)
+  haw: hawayano (hawai`i)
+  he: hebreo (עברית)
+  hi: hindi (हिन्दी)
+  ho: hiri motu
+  hr: croata (hrvatski)
+  ht: criollo haitiano (Krèyol ayisyen)
+  hu: húngaro (magyar)
+  hy: armenio (Հայերեն)
+  ia: interlingua
+  id: indonesio (bahasa indonesia)
+  ie: interlingue
+  ig: igbo
+  ii: sichuan (ꆇꉙ)
+  ik: iñupiak
+  ilo: ilokano
+  io: ido
+  is: islandés (Íslenska)
+  it: italiano
+  iu: inuktitut (ᐃᓄᒃᑎᑐᑦ)
+  ja: japonés (日本語)
+  jbo: lojban
+  jv: javanés (basa jawa)
+  ka: georgiano (ქართული)
+  kg: kongo
+  ki: kikuyu (gĩkũyũ)
+  kj: kuanyama
+  kk: kazajo (қазақша)
+  kl: kalaallisut
+  km: jemer (ភាសាខ្មែរ)
+  kn: canarés (ಕನ್ನಡ)
+  ko: coreano (한국어)
+  kr: kanuri
+  ks: कश्मीरी - (كشميري)
+  ksh: ripoario (Ripoarisch)
+  ku: kurdo (kurdî / كوردي)
+  kv: Коми
+  kw: kernewek
+  ky: kirguiso (kırgızca)
+  la: latín (latina)
+  lad: ladino
+  lb: luxemburgués (lëtzebuergesch)
+  lg: luganda
+  li: limburgués
+  lij: ligur (líguru)
+  lmo: lombardo (lumbaart)
+  ln: lingala
+  lo: laosiano (ລາວ)
+  lt: lituano (lietuvių)
+  lv: letonio (latviešu)
+  map-bms: Basa Banyumasan
+  mg: malgache (malagasy)
+  mh: ebon
+  mi: maor (māori)
+  mk: macedonio (Македонски)
+  ml: malayalam (മലയാളം)
+  mn: mongol (Монгол)
+  mo: moldavo (Молдовеняскэ)
+  mr: maratí (मराठी)
+  ms: malayo (bahasa melayu)
+  mt: maltés (malti)
+  mus: muscogee
+  my: birmano (myanmasa)
+  na: fica (ekakairũ naoero)
+  nah: nahuatl
+  nap: napilitano (nnapulitano)
+  nds: bajo sajón (Plattdüütsch)
+  nds-nl: bajo sajn (Nedersaksisch)
+  ne: nepalés नेपाली
+  ng: oshiwambo
+  nl: holandés (nederlands)
+  nn: noruego (norsk (nynorsk))
+  no: noruego (norsk (bokmål))
+  nov: novial
+  nrm: normando (nouormand)
+  nv: navajo (diné bizaad)
+  ny: chichewa
+  oc: provenzal (occitan)
+  om: oromo (oromoo)
+  or: oriya (ଓଡ଼ିଆ)
+  os: osetio (Иронау)
+  pa: panyabí (ਪੰਜਾਬੀ)
+  pam: pampango
+  pap: papiamento (papiamentu)
+  pdc: alemán de Pensilvania (Deitsch)
+  pi: pali (पािऴ)
+  pih: norfuk / pitkern
+  pl: polonés (polski)
+  pms: piemontés (piemontèis)
+  ps: pashto (پښتو)
+  pt: portugués (português)
+  qu: quechúa (runa simi)
+  rm: romanche (rumantsch)
+  rmy: romaní (romani)
+  rn: rundi (kirundi)
+  ro: rumano (română)
+  roa-rup: arumano (Armâneashti)
+  ru: ruso (Русский)
+  rw: ruanda (kinyarwanda)
+  sa: sánscrito (संस्कृत)
+  sc: sardo (sardu)
+  scn: siciliano (sicilianu)
+  sco: escocés (Scots)
+  sd: sindhi (सिनधि)
+  se: sami (sámegiella)
+  sg: sango (sängö)
+  sh: serbocroata (srpskohrvatski / Српскохрватски)
+  si: singalés (සිංහල)
+  simple: Simple English
+  sk: eslovaco (slovenčina)
+  sl: esloveno (Slovenščina)
+  sm: samoano (gagana samoa)
+  sn: shona (chiShona)
+  so: somalí (soomaaliga)
+  sq: albanés (shqip)
+  sr: serbio (Српски / Srpski)
+  ss: swati (siSwati)
+  st: sotho (seSotho)
+  su: sunda (basa sunda)
+  sv: sueco (svenska)
+  sw: swahili (kiswahili)
+  ta: tamil (தமிழ்) #tàmil
+  te: tegulú (తెలుగు)
+  tet: tetun
+  tg: tayiko (Тоҷикӣ)
+  th: tailandés (ไทย)
+  ti: tigriña (ትግርኛ)
+  tk: turcomano (تركمن / Туркмен)
+  tl: tagalo
+  tlh: 
+  tn: twana (setswana)
+  to: tongano (faka-Tonga) #tongalés
+  tokipona: toki pona
+  tpi: tok pisin
+  tr: turco (türkçe)
+  ts: tonga (xitsonga)
+  tt: t¡rtaro (Tatarça) #tàtar
+  tum: tumbuka (chiTumbuka)
+  tw: twi
+  ty: tahitiano (reo mā`ohi)
+  udm: votiaco (Удмурт)
+  ug: uigur (oyghurque)
+  uk: ucraniano (Українська)
+  ur: urdú (اردو)
+  uz: uzbeko (Ўзбек)
+  ve: venda (tshivenda)
+  vec: venciano (vèneto)
+  vi: vietnamita (Tiếng Việt)
+  vls: flamenco occidental (west-vlaoms)
+  vo: volapük
+  wa: walon
+  war: waray (Samar-Leyte Visayan)
+  wo: wollof
+  xal: calmuco (Хальмг)
+  xh: xhosa (isiXhosa)
+  yi: yídis ייִדיש
+  yo: yoruba (yorùbá)
+  za: Zuangh
+  zh: chino (中文)
+  zh-min-nan: min del sur (bân-lâm-gú)
+  zh-yue: cantonés (粵語)
+  zu: zulú (isiZulu)
+  
+mention:
+  - dame un besito
+  - quiero aser el amor
+  - endequeteví tailoviu
+  - ¿sí? no me digas
+  - deja de molestarme, malnutrido mental
+  - ACTION se mete la mano en la axila y te la hace oler
