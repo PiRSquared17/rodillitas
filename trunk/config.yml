@@ -1,6 +1,5 @@
 nick:     rodillitas
-channel:  "#wikipedia-es
-"
+channel:  "#wikipedia-es"
 server:   irc.freenode.org
 port:     6667
 user:     rodillitas
