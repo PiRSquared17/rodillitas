@@ -61,12 +61,14 @@ class Rodillitas < IRC
             url = URI.parse("http://#{lang}.#{proj}.org")
             url.host.untaint
             Net::HTTP.start(url.host, url.port) do |http|
-                response =  http.get("/w/index.php?title=#{what}&action=raw")
+                response =  http.get("/w/index.php?title=#{what.gsub(" ","_")}&action=raw")
                 case response
                 when Net::HTTPSuccess     then response
                 when Net::HTTPRedirection 
                     response = http.get(response['location'])
                 end
+                puts "/w/index.php?title=#{what}&action=raw"
+                puts response.body
                 write_to_chan(response.body[0..200].gsub("\n", " "), where)
             end
             

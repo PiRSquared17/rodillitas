@@ -1,0 +1,8 @@
+Rodillitas es un bot para el canal de irc #Wikipedia-es de freenode.
+
+== USO ==
+
+Para usarlo sólo necesitas Ruby. Desde el directorio donde esté rodillitas, ejecuta
+> ruby rodillitas.rb
+
+Y ya está todo hecho :)
