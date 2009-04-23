@@ -18,11 +18,22 @@ class Rodillitas < IRC
         when /^ayuda$/: show_help(where)
         when /^help$/: show_help(where)
         when /^art$/
-            if args != ""
-               write_to_chan("¿qué más te da cuántos artículos tenga #{args}.wiki?",where)
-            else
-               write_to_chan("¿Para qué?",where)
+            lang = Constants['site'].has_key?(args) ? args : "es"
+            url = URI.parse("http://#{lang}.wikipedia.org")
+            url.host.untaint
+            Net::HTTP.start(url.host, url.port) do |http|
+                response =  http.get("/w/index.php?title=Special:statistics&action=raw")
+                case response
+                when Net::HTTPSuccess     then response
+                when Net::HTTPRedirection 
+                    response = http.get(response['location'])
+                end
+                if response.body =~ /good=(\d+)/
+                    write_to_chan("#{lang} tiene #{$1} artículos", where)
+                end 
             end
+
+
         when /^c$/
             lang, proj, who = get_lang_site(args)
             url = URI.parse("http://#{lang}.#{proj}.org/")
@@ -32,25 +43,7 @@ class Rodillitas < IRC
                 resp = YAML::each_document(str.body) do |ydoc|
                     data = ydoc['query']['users'][0]
                     editcount = data['editcount']
-                    registration = data['registration']
-                    if registration 
-                        registration = registration.chomp!.split("T")[0]
-                    end
-                    blockedby = data['blockedby']
-                    blockreason = data['blockreason'].chomp
-                    bloqueado = ""
-                    if blockedby
-                        bloqueado = "Bloqueado por #{blockedby}: #{blockreason} . "
-                    end
-                    groupsarr = data['groups']
-                    groups = ""
-                    if groupsarr
-                        groups ="Grupos: "
-                        groupsarr.each {|g| groups += "#{g}, " }
-                        groups.chomp!(", ")
-                        groups += ". "
-                    end
-                    write_to_chan("#{lang}:#{proj}:#{who} #{editcount} ediciones desde #{registration}. #{groups}#{bloqueado}http://#{lang}.#{proj}.org/wiki/Special:Contributions/#{who}", where)
+                    write_to_chan("#{lang}:#{proj}:#{who} ha hecho #{editcount} ediciones", where)
                 end
             end
 
@@ -64,17 +57,53 @@ class Rodillitas < IRC
             write_to_chan("http://es.wikipedia.org/wiki/WP:BORRAR", where)
 
         when /^fetch$/
-            #http://es.wikipedia.org/w/index.php?title=Papa&action=raw
+            lang, proj, what = get_lang_site(args)
+            url = URI.parse("http://#{lang}.#{proj}.org")
+            url.host.untaint
+            Net::HTTP.start(url.host, url.port) do |http|
+                response =  http.get("/w/index.php?title=#{what}&action=raw")
+                case response
+                when Net::HTTPSuccess     then response
+                when Net::HTTPRedirection 
+                    response = http.get(response['location'])
+                end
+                write_to_chan(response.body[0..200].gsub("\n", " "), where)
+            end
             
         when /^info$/
-# Ver            http://es.wikipedia.org/w/api.php?action=query&list=users&ususers=al59&usprop=groups|blockinfo|editcount|registration
-            write_to_chan("http://es.wikipedia.org/wiki/Special:contributions/#{args}", where)
+            lang, proj, who = get_lang_site(args)
+            url = URI.parse("http://#{lang}.#{proj}.org/")
+            url.host.untaint
+            Net::HTTP.start(url.host, url.port) do |http|
+                str =  http.get("/w/api.php?action=query&list=users&ususers=#{who}&usprop=groups|editcount|blockinfo|registration&format=yaml")
+                resp = YAML::each_document(str.body) do |ydoc|
+                    data = ydoc['query']['users'][0]
+                    editcount = data['editcount']
+                    registration = data['registration']
+                    if registration 
+                        registration = registration.chomp!.split("T")[0]
+                    end
+                    blockedby = data['blockedby']
+                    blockreason = data['blockreason']
+                    bloqueado = ""
+                    if blockedby
+                        bloqueado = "Bloqueado por #{blockedby}: #{blockreason.chomp} . "
+                    end
+                    groupsarr = data['groups']
+                    groups = ""
+                    if groupsarr
+                        groups ="Grupos: "
+                        groupsarr.each {|g| groups += "#{g}, " }
+                        groups.chomp!(", ")
+                        groups += ". "
+                    end
+                    write_to_chan("#{lang}:#{proj}:#{who} #{editcount} ediciones desde #{registration}. #{groups}#{bloqueado}http://#{lang}.#{proj}.org/wiki/Special:Contributions/#{who}", where)
+                end
+            end
 
         when /^mant$/
             today = Date::today
             write_to_chan("http://es.wikipedia.org/wiki/Categoría:Wikipedia:Mantenimiento:#{today.day}_de_#{Constants['month'][today.month]}", where)
-
-        when /^s$/
 
         when /^site$/
             write_to_chan(Constants['site'][args], where)
@@ -105,6 +134,7 @@ class Rodillitas < IRC
             what.scan(/\{\{([^|\}]+)\|?([^\}]*)\}\}/) {|s, s2| wikilink(s, where, true)}
         end
     end
+
     def get_lang_site(str)
         splitted = str.split(":")
         tmp = ""
