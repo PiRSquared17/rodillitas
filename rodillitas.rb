@@ -15,7 +15,7 @@ class Rodillitas < IRC
     def on_command(command, args, who, where)
         case command
 
-        when /^ad$/
+        when "ad"
             lang, proj, what = get_lang_site(args)
             url = URI.parse("http://es.wikipedia.org")
             url.host.untaint
@@ -29,7 +29,7 @@ class Rodillitas < IRC
                 write_to_chan("Tenemos "+response.body[0..200].gsub("\n", " ").split('<noinclude>')[0].strip()+" artículos destacados.", where)
             end
 
-        when /^ab$/
+        when "ab"
             url = URI.parse("http://es.wikipedia.org")
             url.host.untaint
             Net::HTTP.start(url.host, url.port) do |http|
@@ -41,11 +41,11 @@ class Rodillitas < IRC
                 end
                 write_to_chan("Tenemos "+response.body[0..200].gsub("\n", " ").split('<noinclude>')[0].strip()+" artículos buenos.", where)
             end
-        when /^all$/: show_help(where)
-        when /^todo$/: show_help(where)
-        when /^ayuda$/: show_help(where)
-        when /^help$/: show_help(where)
-        when /^art$/
+        when "all": show_help(where)
+        when "todo": show_help(where)
+        when "ayuda": show_help(where)
+        when "help": show_help(where)
+        when "art"
             lang = Constants['site'].has_key?(args) ? args : "es"
             url = URI.parse("http://#{lang}.wikipedia.org")
             url.host.untaint
@@ -62,7 +62,7 @@ class Rodillitas < IRC
             end
 
 
-        when /^c$/
+        when "c"
             lang, proj, who = get_lang_site(args)
             url = URI.parse("http://#{lang}.#{proj}.org/")
             url.host.untaint
@@ -74,7 +74,7 @@ class Rodillitas < IRC
                     write_to_chan("#{lang}:#{proj}:#{who} ha hecho #{editcount} ediciones", where)
                 end
             end
-        when /^calc$/
+        when "calc"
             args.untaint
             if args =~ /pi/
                 write_to_chan("¿para qué narices necesitas PI en wikipedia? Wikifica un poco, anda", where)
@@ -86,18 +86,18 @@ class Rodillitas < IRC
                     write_to_chan(eval(args).to_s ,where)
                 end
             end
-        when /^cb$/
+        when "cb"
             write_to_chan("http://es.wikipedia.org/wiki/Special:contributions/#{args}", where)
             write_to_chan("http://es.wikipedia.org/wiki/Special:blockip/#{args}", where)
-        when /^cdb$/
+        when "cdb"
             write_to_chan("http://es.wikipedia.org/wiki/Categoría:Wikipedia:Consultas_de_borrado", where)
 
-        when /^dest$/
+        when "dest"
             write_to_chan("http://es.wikipedia.org/wiki/WP:BORRAR", where)
 
-        when /^fapfap$/
+        when "fapfap"
             write_to_chan(Constants['fapfap'][rand(Constants['fapfap'].length)], where)
-        when /^fetch$/
+        when "fetch"
             lang, proj, what = get_lang_site(args)
             url = URI.parse("http://#{lang}.#{proj}.org")
             url.host.untaint
@@ -112,7 +112,7 @@ class Rodillitas < IRC
             end
             
 
-        when /^info$/
+        when "info"
             lang, proj, who = get_lang_site(args)
             url = URI.parse("http://#{lang}.#{proj}.org/")
             url.host.untaint
@@ -143,16 +143,16 @@ class Rodillitas < IRC
                 end
             end
 
-        when /^mant$/
+        when "mant"
             today = Date::today
             write_to_chan("http://es.wikipedia.org/wiki/Categoría:Wikipedia:Mantenimiento:#{today.day}_de_#{Constants['month'][today.month]}", where)
 
-        when /^site$/
+        when "site"
             write_to_chan(Constants['site'][args], where)
 
-        when /^sugus$/
+        when "sugus"
             write_to_chan("pasa por ventanilla: http://code.google.com/p/rodillitas/issues/entry", where)
-        when /^tam$/
+        when "tam"
             lang, proj, what = get_lang_site(args)
             url = URI.parse("http://#{lang}.#{proj}.org")
             url.host.untaint
@@ -166,7 +166,7 @@ class Rodillitas < IRC
                 write_to_chan(response.body.length.to_s + " bytes", where)
             end
 
-        when /^vec$/
+        when "vec"
             write_to_chan("http://es.wikipedia.org/wiki/WP:VEC", where)
 
         else 
