@@ -177,7 +177,7 @@ class Rodillitas < IRC
     end
 
     def show_help(where)
-        write_to_chan("&ab, &ad, &art, &calc, &cb, &cdb, &dest, &fetch, &info, &mant, &site, &sugus, &vec" , where)
+        write_to_chan("&ab, &ad, &art, &calc, &cb, &cdb, &dest, &fapfap, &fetch, &info, &mant, &site, &sugus, &vec" , where)
     end
 
     def on_pub_msg(what, who, where)
