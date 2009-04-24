@@ -81,6 +81,34 @@ class Rodillitas < IRC
                 end
                 write_to_chan(response.body[0..200].gsub("\n", " "), where)
             end
+
+        when /^ad$/
+            lang, proj, what = get_lang_site(args)
+            url = URI.parse("http://#{lang}.#{proj}.org")
+            url.host.untaint
+            Net::HTTP.start(url.host, url.port) do |http|
+                response =  http.get("/w/index.php?title=Plantilla:DESTACADOS&action=raw")
+                case response
+                when Net::HTTPSuccess     then response
+                when Net::HTTPRedirection 
+                    response = http.get(response['location'])
+                end
+                write_to_chan("Tenemos "+response.body[0..200].gsub("\n", " ").split('<noinclude>')[0].strip()+" artículos destacados.", where)
+            end
+
+        when /^ab$/
+            lang, proj, what = get_lang_site(args)
+            url = URI.parse("http://#{lang}.#{proj}.org")
+            url.host.untaint
+            Net::HTTP.start(url.host, url.port) do |http|
+                response =  http.get("/w/index.php?title=Plantilla:BUENOS&action=raw")
+                case response
+                when Net::HTTPSuccess     then response
+                when Net::HTTPRedirection 
+                    response = http.get(response['location'])
+                end
+                write_to_chan("Tenemos "+response.body[0..200].gsub("\n", " ").split('<noinclude>')[0].strip()+" artículos buenos.", where)
+            end
             
         when /^info$/
             lang, proj, who = get_lang_site(args)
@@ -147,7 +175,7 @@ class Rodillitas < IRC
     end
 
     def show_help(where)
-        write_to_chan("&art, &cb, &cdb, &dest, &fetch, &info, &mant, &site, &sugus, &vec" , where)
+        write_to_chan("&ab, &ad, &art, &cb, &cdb, &dest, &fetch, &info, &mant, &site, &sugus, &vec" , where)
     end
 
     def on_pub_msg(what, who, where)
