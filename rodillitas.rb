@@ -16,7 +16,6 @@ class Rodillitas < IRC
         case command
 
         when "ad"
-            lang, proj, what = get_lang_site(args)
             url = URI.parse("http://es.wikipedia.org")
             url.host.untaint
             Net::HTTP.start(url.host, url.port) do |http|
@@ -94,6 +93,9 @@ class Rodillitas < IRC
 
         when "dest"
             write_to_chan("http://es.wikipedia.org/wiki/WP:BORRAR", where)
+
+	when "drae"
+            write_to_chan("http://buscon.rae.es/draeI/SrvltConsulta?TIPO_BUS=3&LEMA=#{args}", where)
 
         when "fapfap"
             write_to_chan(Constants['fapfap'][rand(Constants['fapfap'].length)], where)
@@ -177,7 +179,7 @@ class Rodillitas < IRC
     end
 
     def show_help(where)
-        write_to_chan("&ab, &ad, &art, &calc, &cb, &cdb, &dest, &fapfap, &fetch, &info, &mant, &site, &sugus, &vec" , where)
+        write_to_chan("&ab, &ad, &art, &calc, &cb, &cdb, &dest, &drae, &fapfap, &fetch, &info, &mant, &site, &sugus, &vec" , where)
     end
 
     def on_pub_msg(what, who, where)
