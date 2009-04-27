@@ -5,7 +5,7 @@ require "date"
 require "yaml"
 require "net/http"
 require "rexml/document"
-
+require "open-uri"
 
 Config = YAML::load(File.open("config.yml"))
 Constants = YAML::load(File.open("const.yml"))
@@ -95,7 +95,21 @@ class Rodillitas < IRC
             write_to_chan("http://es.wikipedia.org/wiki/WP:BORRAR", where)
 
 	when "drae"
-            write_to_chan("http://buscon.rae.es/draeI/SrvltConsulta?TIPO_BUS=3&LEMA=#{args}", where)
+            url = URI.parse("http://buscon.rae.es")
+            url.host.untaint
+            Net::HTTP.start(url.host, url.port) do |http|
+                response =  http.get("/draeI/SrvltGUIBusUsual?TIPO_HTML=2&LEMA=#{args}")
+                case response
+                when Net::HTTPSuccess     then response
+                when Net::HTTPRedirection 
+                    response = http.get(response['location'])
+                end
+		if response.body =~ /en el Diccionario/
+			write_to_chan("La palabra «#{args}» no está en el Diccionario de la RAE.", where)
+		else
+	    		write_to_chan("http://buscon.rae.es/draeI/SrvltConsulta?TIPO_BUS=3&LEMA=#{args}", where)
+		end
+            end
 
         when "fapfap"
             write_to_chan(Constants['fapfap'][rand(Constants['fapfap'].length)], where)
