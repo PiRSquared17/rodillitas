@@ -5,7 +5,6 @@ require "date"
 require "yaml"
 require "net/http"
 require "rexml/document"
-require "open-uri"
 
 Config = YAML::load(File.open("config.yml"))
 Constants = YAML::load(File.open("const.yml"))
@@ -44,6 +43,20 @@ class Rodillitas < IRC
         when "todo": show_help(where)
         when "ayuda": show_help(where)
         when "help": show_help(where)
+
+	when "aleatorio"
+            url = URI.parse("http://es.wikipedia.org")
+            url.host.untaint
+            Net::HTTP.start(url.host, url.port) do |http|
+                response =  http.get("/wiki/Especial:Aleatoria")
+                case response
+                when Net::HTTPSuccess     then response
+                when Net::HTTPRedirection 
+                    new_url = response['location']
+                end
+		write_to_chan(new_url, where)
+            end
+
         when "art"
             lang = Constants['site'].has_key?(args) ? args : "es"
             url = URI.parse("http://#{lang}.wikipedia.org")
@@ -193,7 +206,7 @@ class Rodillitas < IRC
     end
 
     def show_help(where)
-        write_to_chan("&ab, &ad, &art, &calc, &cb, &cdb, &dest, &drae, &fapfap, &fetch, &info, &mant, &site, &sugus, &vec" , where)
+        write_to_chan("&ab, &ad, &aleatorio, &art, &calc, &cb, &cdb, &dest, &drae, &fapfap, &fetch, &info, &mant, &site, &sugus, &vec" , where)
     end
 
     def on_pub_msg(what, who, where)
