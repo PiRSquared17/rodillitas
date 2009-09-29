@@ -107,6 +107,23 @@ class Rodillitas < IRC
         when "dest"
             write_to_chan("http://es.wikipedia.org/wiki/WP:BORRAR", where)
 
+	when "dpd"
+	    url = URI.parse("http://buscon.rae.es")
+            url.host.untaint
+            Net::HTTP.start(url.host, url.port) do |http|
+                response =  http.get("/dpdI/SrvltGUIBusDPD?lema=#{args}")
+                case response
+                when Net::HTTPSuccess     then response
+                when Net::HTTPRedirection 
+                    response = http.get(response['location'])
+                end
+		if response.body =~ /en el </
+			write_to_chan("La palabra «#{args}» no está en el Diccionario panhispánico de dudas.", where)
+		else
+	    		write_to_chan("http://buscon.rae.es/dpdI/SrvltGUIBusDPD?lema=#{args}", where)
+		end
+	    end
+
 	when "drae"
             url = URI.parse("http://buscon.rae.es")
             url.host.untaint
@@ -206,7 +223,7 @@ class Rodillitas < IRC
     end
 
     def show_help(where)
-        write_to_chan("&ab, &ad, &aleatorio, &art, &calc, &cb, &cdb, &dest, &drae, &fapfap, &fetch, &info, &mant, &site, &sugus, &vec" , where)
+        write_to_chan("&ab, &ad, &aleatorio, &art, &calc, &cb, &cdb, &dest, &dpd, &drae, &fapfap, &fetch, &info, &mant, &site, &sugus, &vec" , where)
     end
 
     def on_pub_msg(what, who, where)
